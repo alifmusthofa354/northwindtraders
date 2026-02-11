@@ -17,39 +17,31 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'author' => 'required|string|max:255',
-            'article' => 'required',
+            'product_name' => 'required|string|min:3',
+        ]);
+        $product = Products::create([
+            'product_id' => 78,
+            'product_name' => $request->name,
+            'supplier_id' => 1,
+            'category_id' => 3,
+            'quantity_per_unit' => '10 boxes x 30 bags',
+            'unit_price' => 18,
+            'units_in_stock' => 39,
+            'units_on_order' => 0,
+            'reorder_level' => 10,
+            'discontinued' => 1,
         ]);
 
-        return Products::create($request->all());
+        return $product;
+
+        // return Products::create($request->all());
     }
 
     // Get a single post by ID
-    public function show($id)
+    public function show(string $id)
     {
-        return Products::find($id);
-    }
+        $product = Products::find($id, ['product_id', 'product_name', 'supplier_id', 'category_id']);
 
-    // Update a post by ID
-    public function update(Request $request, $id)
-    {
-        $post = Products::find($id);
-
-        $request->validate([
-            'title' => 'string|max:255',
-            'author' => 'string|max:255',
-            'article' => 'nullable',
-        ]);
-
-        $post->update($request->all());
-
-        return $post;
-    }
-
-    // Delete a post by ID
-    public function destroy($id)
-    {
-        return Products::destroy($id);
+        return $product;
     }
 }
