@@ -10,7 +10,13 @@ class ProductController extends Controller
     // Get all posts
     public function index()
     {
-        return Products::all();
+        $products = Products::all();
+
+        return response()->json([
+            'message' => 'Success',
+            'status' => 200,
+            'data' => $products,
+        ], 200);
     }
 
     // Create a new post
@@ -42,6 +48,10 @@ class ProductController extends Controller
     {
         $product = Products::find($id, ['product_id', 'product_name', 'supplier_id', 'category_id']);
 
-        return $product;
+        return response()->json([
+            'message' => 'Success',
+            'status' => 200,
+            'data' => $product,
+        ], 200);
     }
 }
