@@ -25,22 +25,13 @@ class ProductController extends Controller
         $request->validate([
             'product_name' => 'required|string|min:3',
         ]);
-        $product = Products::create([
-            'product_id' => 78,
-            'product_name' => $request->name,
-            'supplier_id' => 1,
-            'category_id' => 3,
-            'quantity_per_unit' => '10 boxes x 30 bags',
-            'unit_price' => 18,
-            'units_in_stock' => 39,
-            'units_on_order' => 0,
-            'reorder_level' => 10,
-            'discontinued' => 1,
-        ]);
+        $product = Products::create($request->all());
 
-        return $product;
-
-        // return Products::create($request->all());
+        return response()->json([
+            'message' => 'Success',
+            'status' => 201,
+            'data' => $product,
+        ], 201);
     }
 
     // Get a single post by ID
